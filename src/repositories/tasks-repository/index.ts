@@ -7,8 +7,13 @@ async function create(data: Prisma.TaskCreateInput) {
   });
 }
 
+async function findAllTasks() {
+  return prisma.task.findMany();
+}
+
 const tasksRepository = {
   create,
+  findAllTasks,
 };
 
 export default tasksRepository;
