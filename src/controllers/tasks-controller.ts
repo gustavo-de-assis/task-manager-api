@@ -39,7 +39,23 @@ export async function deletTask(req: Request, res: Response) {
     res.sendStatus(httpStatus.OK);
   } catch (error) {
     if (error.name === "NotFoundError") {
-      return res.sendStatus(httpStatus.NO_CONTENT);
+      return res.sendStatus(httpStatus.NOT_FOUND);
+    }
+    return res.sendStatus(httpStatus.BAD_REQUEST);
+  }
+}
+
+export async function updateTask(req: Request, res: Response) {
+  const updatedTaskData = req.body as Partial<Task>;
+  const { taskId } = req.params;
+
+  try {
+    await taskService.updateTask(Number(taskId), updatedTaskData);
+    return res.sendStatus(httpStatus.OK);
+  } catch (error) {
+    console.log(error.message);
+    if (error.name === "NotFoundError") {
+      return res.sendStatus(httpStatus.NOT_FOUND);
     }
     return res.sendStatus(httpStatus.BAD_REQUEST);
   }

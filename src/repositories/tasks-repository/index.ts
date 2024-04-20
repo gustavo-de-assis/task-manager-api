@@ -1,4 +1,4 @@
-import { Prisma } from "@prisma/client";
+import { Prisma, Task } from "@prisma/client";
 import { prisma } from "@/config";
 
 async function create(data: Prisma.TaskCreateInput) {
@@ -27,11 +27,26 @@ async function deleteTask(taskId: number) {
   });
 }
 
+async function updateTask(
+  taskId: number,
+  updatedTask: Partial<UpdateTaskParams>
+) {
+  return prisma.task.update({
+    where: {
+      id: taskId,
+    },
+    data: updatedTask,
+  });
+}
+
+export type UpdateTaskParams = Omit<Task, "id">;
+
 const tasksRepository = {
   create,
   findAllTasks,
   findById,
   deleteTask,
+  updateTask,
 };
 
 export default tasksRepository;

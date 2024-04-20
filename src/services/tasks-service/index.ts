@@ -28,6 +28,24 @@ export async function deletTask(taskId: number) {
   return tasksRepository.deleteTask(taskId);
 }
 
+export async function updateTask(
+  taskId: number,
+  data: Partial<CreateTaskParams>
+) {
+  const task = await tasksRepository.findById(taskId);
+
+  if (!task) {
+    throw notFoundError();
+  }
+
+  if (data.deadline) {
+    data.deadline = new Date(data.deadline);
+    await validateTaskDeadline(data.deadline);
+  }
+
+  return tasksRepository.updateTask(taskId, data);
+}
+
 async function validateTaskDeadline(taskDate: Date) {
   const now = new Date();
 
@@ -42,6 +60,7 @@ const taskService = {
   createTask,
   getTasks,
   deletTask,
+  updateTask,
 };
 
 export default taskService;
