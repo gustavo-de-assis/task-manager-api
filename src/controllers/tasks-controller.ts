@@ -5,13 +5,7 @@ import httpStatus from "http-status";
 
 export async function postTask(req: Request, res: Response) {
   try {
-    const data: Task = {
-      title: req.body.title,
-      description: req.body.description,
-      deadline: new Date(req.body.deadline),
-    };
-
-    await taskService.createTask(data);
+    await taskService.createTask(req.body);
 
     return res.sendStatus(httpStatus.OK);
   } catch (error) {

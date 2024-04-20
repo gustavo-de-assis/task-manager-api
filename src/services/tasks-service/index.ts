@@ -14,6 +14,7 @@ export async function getTasks() {
 }
 
 export async function createTask(data: CreateTaskParams): Promise<Task> {
+  data.deadline = new Date(data.deadline);
   await validateTaskDeadline(data.deadline);
   return tasksRepository.create(data);
 }
