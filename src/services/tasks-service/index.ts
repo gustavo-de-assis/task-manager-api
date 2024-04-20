@@ -18,6 +18,16 @@ export async function createTask(data: CreateTaskParams): Promise<Task> {
   return tasksRepository.create(data);
 }
 
+export async function deletTask(taskId: number) {
+  const task = await tasksRepository.findById(taskId);
+
+  if (!task) {
+    throw notFoundError();
+  }
+
+  return tasksRepository.deleteTask(taskId);
+}
+
 async function validateTaskDeadline(taskDate: Date) {
   const now = new Date();
 
@@ -31,6 +41,7 @@ export type CreateTaskParams = Pick<Task, "title" | "description" | "deadline">;
 const taskService = {
   createTask,
   getTasks,
+  deletTask,
 };
 
 export default taskService;
