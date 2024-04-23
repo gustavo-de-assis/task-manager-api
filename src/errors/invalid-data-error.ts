@@ -1,7 +1,7 @@
 import { ApplicationError } from "@/protocols";
 
 export function invalidDataError(
-  details: string[]
+  details: string[],
 ): ApplicationInvalidateDataError {
   return {
     name: "InvalidDataError",

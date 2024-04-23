@@ -1,7 +1,7 @@
-import { Task } from "@/protocols";
-import taskService from "@/services/tasks-service";
 import { Request, Response } from "express";
 import httpStatus from "http-status";
+import { Task } from "@/protocols";
+import taskService from "@/services/tasks-service";
 
 export async function postTask(req: Request, res: Response) {
   try {
@@ -13,11 +13,14 @@ export async function postTask(req: Request, res: Response) {
   }
 }
 
+//validação
 export async function getTasks(req: Request, res: Response) {
+  const filters = req.query;
   try {
-    const tasks = await taskService.getTasks();
+    const tasks = await taskService.getTasks(filters);
     return res.status(httpStatus.OK).send(tasks);
   } catch (error) {
+    console.log(error.message);
     if (error.name === "NotFoundError") {
       return res.sendStatus(httpStatus.NO_CONTENT);
     }

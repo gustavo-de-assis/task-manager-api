@@ -7,8 +7,14 @@ async function create(data: Prisma.TaskCreateInput) {
   });
 }
 
-async function findAllTasks() {
-  return prisma.task.findMany();
+async function findAllTasks(filters: Partial<TaskFilters>) {
+  const filterArray = Object.entries(filters).map(([key, value]) => ({
+    [key]: value,
+  }));
+
+  return prisma.task.findMany({
+    orderBy: filterArray,
+  });
 }
 
 async function findById(taskId: number) {
@@ -40,6 +46,11 @@ async function updateTask(
 }
 
 export type UpdateTaskParams = Omit<Task, "id">;
+
+export interface TaskFilters {
+  title?: "asc" | "desc";
+  deadline?: "asc" | "desc";
+}
 
 const tasksRepository = {
   create,

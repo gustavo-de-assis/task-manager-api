@@ -1,14 +1,14 @@
-import { invalidDataError } from "@/errors/invalid-data-error";
 import { NextFunction, Request, Response } from "express";
 import httpStatus from "http-status";
 import { ObjectSchema } from "joi";
+import { invalidDataError } from "@/errors/invalid-data-error";
 
 export function validateBody<T>(schema: ObjectSchema<T>): ValidationMiddleware {
   return validate(schema, "body");
 }
 
 export function validateParams<T>(
-  schema: ObjectSchema<T>
+  schema: ObjectSchema<T>,
 ): ValidationMiddleware {
   return validate(schema, "params");
 }
@@ -32,5 +32,5 @@ function validate(schema: ObjectSchema, type: "body" | "params") {
 type ValidationMiddleware = (
   req: Request,
   res: Response,
-  next: NextFunction
+  next: NextFunction,
 ) => void;

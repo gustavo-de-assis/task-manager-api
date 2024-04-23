@@ -1,7 +1,7 @@
+import { Router } from "express";
 import { deletTask, getTasks, postTask, updateTask } from "@/controllers";
 import { validateBody } from "@/middlewares/validation-middleware";
 import { createTaskSchema } from "@/schemas/tasks-schemas";
-import { Router } from "express";
 
 const tasksRouter = Router();
 

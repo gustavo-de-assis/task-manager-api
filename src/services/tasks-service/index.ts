@@ -1,10 +1,10 @@
 import { Task } from "@prisma/client";
-import tasksRepository from "@/repositories/tasks-repository";
+import tasksRepository, { TaskFilters } from "@/repositories/tasks-repository";
 import { invalidDeadlineError } from "@/errors/invalid-deadline-error";
 import { notFoundError } from "@/errors/not-found-error";
 
-export async function getTasks() {
-  const tasks = await tasksRepository.findAllTasks();
+export async function getTasks(filters: TaskFilters) {
+  const tasks = await tasksRepository.findAllTasks(filters);
 
   if (!tasks || tasks.length === 0) {
     throw notFoundError();
