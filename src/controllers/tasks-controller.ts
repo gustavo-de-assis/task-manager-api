@@ -52,10 +52,10 @@ export async function updateTask(req: Request, res: Response) {
   } catch (error) {
     console.log(error.message);
     if (error.name === "NotFoundError") {
-      return res.sendStatus(httpStatus.NOT_FOUND);
+      return res.status(httpStatus.NOT_FOUND).send(error);
     }
     if (error.name === "InvalidDeadlineError") {
-      return res.sendStatus(httpStatus.UNPROCESSABLE_ENTITY);
+      return res.status(httpStatus.UNPROCESSABLE_ENTITY).send(error);
     }
     return res.sendStatus(httpStatus.BAD_REQUEST);
   }

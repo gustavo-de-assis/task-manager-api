@@ -49,8 +49,12 @@ export async function updateTask(
 
 async function validateTaskDeadline(taskDate: Date) {
   const now = new Date();
+  now.setHours(0, 0, 0, 0);
 
-  if (taskDate < now) {
+  const taskDateMidnight = new Date(taskDate);
+  taskDateMidnight.setHours(0, 0, 0, 0);
+
+  if (taskDateMidnight < now) {
     throw invalidDeadlineError();
   }
 }
