@@ -48,13 +48,22 @@ export async function updateTask(
 }
 
 async function validateTaskDeadline(taskDate: Date) {
+  // Get the current date in UTC and set it to midnight
   const now = new Date();
-  now.setHours(0, 0, 0, 0);
+  const nowUTC = new Date(
+    Date.UTC(now.getUTCFullYear(), now.getUTCMonth(), now.getUTCDate())
+  );
 
-  const taskDateMidnight = new Date(taskDate);
-  taskDateMidnight.setHours(0, 0, 0, 0);
+  // Convert the task date to UTC midnight
+  const taskDateUTC = new Date(
+    Date.UTC(
+      taskDate.getUTCFullYear(),
+      taskDate.getUTCMonth(),
+      taskDate.getUTCDate()
+    )
+  );
 
-  if (taskDateMidnight < now) {
+  if (taskDateUTC < nowUTC) {
     throw invalidDeadlineError();
   }
 }

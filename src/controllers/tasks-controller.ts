@@ -9,6 +9,7 @@ export async function postTask(req: Request, res: Response) {
 
     return res.sendStatus(httpStatus.OK);
   } catch (error) {
+    console.log(error);
     return res.status(httpStatus.BAD_REQUEST).send(error.message);
   }
 }
